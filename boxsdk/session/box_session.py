@@ -352,7 +352,10 @@ class BoxSession(object):
         if files and file_stream_positions:
             request_kwargs = kwargs.copy()
             for name, position in file_stream_positions.items():
-                files[name][1].seek(position)
+                try: 
+                    files[name][1].seek(position)
+                except:
+                    pass
             data = request_kwargs.pop('data', {})
             multipart_stream = MultipartStream(data, files)
             request_kwargs['data'] = multipart_stream
